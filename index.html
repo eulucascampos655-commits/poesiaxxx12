@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduRede - Comunidade Criativa</title>
+    
+    <style>
+        /* CSS - Estilização Visual */
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --admin-color: #2d3436;
+            --bg: #f0f2f5;
+            --white: #ffffff;
+            --success: #00ca4e;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--white);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .hidden { display: none !important; }
+
+        h1, h2, h3 { color: var(--primary); text-align: center; }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover { opacity: 0.9; }
+
+        .btn-secondary { background-color: #636e72; }
+
+        /* Estilo do Perfil e Status */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--bg);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .status-dot {
+            height: 12px;
+            width: 12px;
+            background-color: var(--success);
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+            box-shadow: 0 0 5px var(--success);
+        }
+
+        /* Estilo dos Cards de Postagem */
+        .post-card {
+            background: #fff;
+            border: 1px solid #eee;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .post-type-tag {
+            font-size: 10px;
+            background: var(--secondary);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            text-transform: uppercase;
+        }
+
+        .rating-display {
+            color: #f1c40f;
+            font-weight: bold;
+            float: right;
+        }
+
+        .admin-box {
+            background: #f9f9f9;
+            padding: 15px;
+            border: 1px dashed var(--admin-color);
+            margin-top: 10px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="screen-login" class="container">
+        <h1>EduRede</h1>
+        <p style="text-align: center;">Entre para começar a criar</p>
+        <form id="form-login">
+            <input type="text" id="in-nome" placeholder="Nome Completo" required>
+            <input type="text" id="in-cpf" placeholder="CPF (Apenas números)" required>
+            <input type="text" id="in-turma" placeholder="Turma (ex: 3º A)" required>
+            <input type="text" id="in-escola" placeholder="Nome da Escola" required>
+            <input type="text" id="in-aura" placeholder="Sua Aura (Ex: Criativa, Inspirada)" required>
+            <button type="submit">Acessar Comunidade</button>
+        </form>
+        <button class="btn-secondary" onclick="toggleScreen('screen-login', 'screen-admin-login')">Painel do Administrador</button>
+    </div>
+
+    <div id="screen-feed" class="container hidden">
+        <div class="profile-header">
+            <div>
+                <span class="status-dot"></span>
+                <strong id="display-user-name">Nome</strong>
+                <br><small id="display-user-aura">Aura</small>
+            </div>
+            <button style="width: auto; margin: 0; padding: 5px 10px;" onclick="window.location.reload()">Sair</button>
+        </div>
+
+        <section>
+            <h3>Criar Novo Conteúdo</h3>
+            <select id="post-category">
+                <option value="Poema">Poema</option>
+                <option value="Música">Música</option>
+                <option value="Texto">Texto</option>
+                <option value="Motivação">Frase de Motivação</option>
+            </select>
+            <textarea id="post-text" rows="4" placeholder="O que você está pensando agora?"></textarea>
+            <button onclick="publishPost()">Publicar no Feed</button>
+        </section>
+
+        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
+        <div id="feed-list">
+            </div>
+    </div>
+
+    <div id="screen-admin-login" class="container hidden">
+        <h2>Acesso Restrito</h2>
+        <input type="password" id="admin-pass" placeholder="Digite a senha do Admin">
+        <button onclick="verifyAdmin()">Entrar como Admin</button>
+        <button class="btn-secondary" onclick="toggleScreen('screen-admin-login', 'screen-login')">Voltar</button>
+    </div>
+
+    <div id="screen-admin-panel" class="container hidden">
+        <h2>Painel de Avaliação</h2>
+        <p>Olá, Administrador. Avalie as obras da comunidade:</p>
+        <div id="admin-eval-list">
+            </div>
+        <button onclick="toggleScreen('screen-admin-panel', 'screen-feed')">Ver Feed Social</button>
+        <button class="btn-secondary" onclick="window.location.reload()">Logout</button>
+    </div>
+
+    <script>
+        // JAVASCRIPT - Lógica de Funcionamento
+        let userData = {};
+        let allPosts = [];
+
+        // Troca de telas
+        function toggleScreen(hideId, showId) {
+            document.getElementById(hideId).classList.add('hidden');
+            document.getElementById(showId).classList.remove('hidden');
+        }
+
+        // Login do Usuário
+        document.getElementById('form-login').addEventListener('submit', function(e) {
+            e.preventDefault();
+            userData = {
+                nome: document.getElementById('in-nome').value,
+                cpf: document.getElementById('in-cpf').value,
+                turma: document.getElementById('in-turma').value,
+                escola: document.getElementById('in-escola').value,
+                aura: document.getElementById('in-aura').value
+            };
+
+            document.getElementById('display-user-name').innerText = userData.nome;
+            document.getElementById('display-user-aura').innerText = "✨ Aura: " + userData.aura + " | " + userData.turma;
+            
+            toggleScreen('screen-login', 'screen-feed');
+        });
+
+        // Publicar Postagem
+        function publishPost() {
+            const text = document.getElementById('post-text').value;
+            const category = document.getElementById('post-category').value;
+
+            if (!text) return alert("Escreva algo primeiro!");
+
+            const post = {
+                id: Date.now(),
+                author: userData.nome,
+                school: userData.escola,
+                type: category,
+                content: text,
+                rating: null
+            };
+
+            allPosts.unshift(post); // Adiciona no topo
+            document.getElementById('post-text').value = "";
+            renderFeed();
+        }
+
+        // Renderizar Feed Social
+        function renderFeed() {
+            const feed = document.getElementById('feed-list');
+            feed.innerHTML = "";
+
+            allPosts.forEach(post => {
+                feed.innerHTML += `
+                    <div class="post-card">
+                        <span class="rating-display">${post.rating ? '⭐ ' + post.rating : '⏳ Pendente'}</span>
+                        <span class="post-type-tag">${post.type}</span>
+                        <p><strong>${post.author}</strong> <small>(${post.school})</small></p>
+                        <p>${post.content}</p>
+                    </div>
+                `;
+            });
+        }
+
+        // Admin: Verificação de Senha
+        function verifyAdmin() {
+            const pass = document.getElementById('admin-pass').value;
+            if (pass === "admin123") { // Senha padrão para teste
+                toggleScreen('screen-admin-login', 'screen-admin-panel');
+                renderAdminPanel();
+            } else {
+                alert("Senha administrativa incorreta!");
+            }
+        }
+
+        // Admin: Renderizar Lista de Avaliação
+        function renderAdminPanel() {
+            const list = document.getElementById('admin-eval-list');
+            list.innerHTML = "";
+
+            if (allPosts.length === 0) {
+                list.innerHTML = "<p>Nenhum conteúdo para avaliar ainda.</p>";
+            }
+
+            allPosts.forEach(post => {
+                list.innerHTML += `
+                    <div class="post-card">
+                        <p><strong>Autor:</strong> ${post.author}</p>
+                        <p>"${post.content}"</p>
+                        <div class="admin-box">
+                            <label>Dar Nota (0 a 10):</label>
+                            <input type="number" id="rating-${post.id}" min="0" max="10" step="0.5">
+                            <button onclick="submitRating(${post.id})">Confirmar Nota</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Admin: Atribuir Nota
+        function submitRating(postId) {
+            const score = document.getElementById(`rating-${postId}`).value;
+            if (score === "") return alert("Insira uma nota!");
+
+            const post = allPosts.find(p => p.id === postId);
+            if (post) {
+                post.rating = score;
+                alert("Conteúdo avaliado com sucesso!");
+                renderAdminPanel();
+                renderFeed();
+            }
+        }
+    </script>
+</body>
+</html>

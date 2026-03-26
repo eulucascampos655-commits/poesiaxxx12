@@ -3,167 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduRede Social | Comunidade Criativa</title>
+    <title>EduRede Social | Real-Time Completo</title>
     <style>
-        /* CSS PROFISSIONAL - DESIGN MODERNO */
-        :root {
-            --primary: #6c5ce7;
-            --secondary: #a29bfe;
-            --accent: #00cec9;
-            --danger: #ff7675;
-            --success: #00b894;
-            --bg: #dfe6e9;
-            --glass: rgba(255, 255, 255, 0.9);
-        }
-
-        body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
-            background-attachment: fixed;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            color: #2d3436;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 650px;
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-
+        :root { --primary: #6c5ce7; --bg: #f0f2f5; --white: #ffffff; --online: #00b894; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 20px; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 600px; background: var(--white); padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .hidden { display: none !important; }
-
-        h1 { text-align: center; color: var(--primary); margin-bottom: 5px; }
-        p.subtitle { text-align: center; color: #636e72; margin-bottom: 25px; font-size: 14px; }
-
-        input, textarea, select {
-            width: 100%;
-            padding: 14px;
-            margin: 10px 0;
-            border: 2px solid #eee;
-            border-radius: 12px;
-            box-sizing: border-box;
-            transition: 0.3s;
-            font-size: 16px;
-        }
-
-        input:focus, textarea:focus { border-color: var(--primary); outline: none; background: #fff; }
-
-        button {
-            width: 100%;
-            padding: 15px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.3s;
-            margin-top: 10px;
-            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
-        }
-
-        button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4); }
-        .btn-admin { background: #2d3436; margin-top: 15px; opacity: 0.8; }
-
-        /* Estilo dos Posts */
-        .post-card {
-            background: white;
-            padding: 20px;
-            margin-top: 20px;
-            border-radius: 15px;
-            border-left: 6px solid var(--primary);
-            position: relative;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .nota-badge {
-            position: absolute;
-            top: -10px;
-            right: 15px;
-            background: #f1c40f;
-            color: #fff;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        .user-online { color: var(--success); font-weight: bold; display: flex; align-items: center; gap: 5px; }
-        .dot { width: 8px; height: 8px; background: var(--success); border-radius: 50%; display: inline-block; }
-
-        .type-tag { font-size: 11px; background: #eee; padding: 2px 8px; border-radius: 5px; text-transform: uppercase; color: #636e72; }
+        input, textarea, select { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; }
+        button { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .post-card { background: #fff; border: 1px solid #eee; padding: 20px; margin-top: 15px; border-radius: 15px; position: relative; border-left: 5px solid var(--primary); }
+        .status-badge { color: var(--online); font-weight: bold; font-size: 14px; margin-bottom: 10px; display: block; }
+        .nota-badge { position: absolute; top: 15px; right: 15px; background: #f1c40f; color: white; padding: 5px 12px; border-radius: 20px; font-weight: bold; }
+        hr { border: 0; border-top: 1px solid #eee; margin: 20px 0; }
     </style>
 </head>
 <body>
 
     <div id="section-login" class="container">
-        <h1>EduRede 🎓</h1>
-        <p class="subtitle">Sua rede social de arte e motivação escolar</p>
+        <h1 style="text-align: center; color: var(--primary);">EduRede 🎓</h1>
         <input type="text" id="login-nome" placeholder="Nome Completo">
-        <input type="text" id="login-cpf" placeholder="CPF (Ex: 000.000.000-00)" maxlength="14">
-        <input type="text" id="login-turma" placeholder="Turma (ex: 2º ano B)">
-        <input type="text" id="login-escola" placeholder="Nome da Instituição">
-        <input type="text" id="login-aura" placeholder="Sua Aura hoje (Ex: Criativa, Inspirada)">
-        <button onclick="validaEntrada()">Entrar na Rede</button>
-        <button class="btn-admin" onclick="trocarTela('section-login', 'section-admin-auth')">Painel do Professor</button>
+        <input type="text" id="login-cpf" placeholder="CPF">
+        <input type="text" id="login-turma" placeholder="Turma">
+        <input type="text" id="login-aura" placeholder="Sua Aura">
+        <button onclick="entrar()">Entrar no Feed</button>
+        <button style="background: #2d3436;" onclick="mostrarPainelAdmin()">Painel do Professor</button>
     </div>
 
     <div id="section-feed" class="container hidden">
-        <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; border-bottom: 1px solid #ddd;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
             <div>
-                <span class="user-online"><span class="dot"></span> Online</span>
-                <strong id="display-nome">Usuário</strong>
+                <span class="status-badge">● Online Agora</span>
+                <strong id="perfil-nome"></strong>
             </div>
-            <button style="width: auto; padding: 8px 15px; margin:0;" onclick="location.reload()">Sair</button>
+            <button style="width: auto; margin: 0;" onclick="location.reload()">Sair</button>
         </div>
-
-        <div style="margin-top: 25px; background: rgba(108, 92, 231, 0.05); padding: 20px; border-radius: 15px;">
-            <h3>✨ Criar Nova Obra</h3>
-            <select id="post-tipo">
-                <option value="Poema">📜 Poema</option>
-                <option value="Música">🎵 Letra de Música</option>
-                <option value="Frase">💡 Frase Motivacional</option>
-                <option value="Texto">✍️ Texto / Crônica</option>
-            </select>
-            <textarea id="post-texto" rows="4" placeholder="Inspire o mundo com suas palavras..."></textarea>
-            <button onclick="enviarParaNuvem()">Publicar Agora</button>
-        </div>
-
-        <div id="feed-dinamico">
+        <hr>
+        <h3>Publicar Nova Obra</h3>
+        <select id="post-tipo">
+            <option value="Poema">Poema</option>
+            <option value="Música">Música</option>
+            <option value="Motivação">Frase Motivacional</option>
+        </select>
+        <textarea id="post-texto" rows="3" placeholder="Escreva aqui..."></textarea>
+        <button onclick="publicar()">Publicar para Todos</button>
+        
+        <div id="feed-lista">
             </div>
     </div>
 
-    <div id="section-admin-auth" class="container hidden">
-        <h2>Acesso Administrativo</h2>
-        <p class="subtitle">Área restrita para avaliação de professores</p>
-        <input type="password" id="admin-password" placeholder="Digite a chave mestre">
-        <button onclick="autenticarAdmin()">Verificar Senha</button>
-        <button class="btn-admin" onclick="location.reload()">Voltar ao Login</button>
-    </div>
-
-    <div id="section-admin-panel" class="container hidden">
-        <h2>Avaliador de Conteúdo</h2>
-        <div id="admin-feed"></div>
-        <button onclick="trocarTela('section-admin-panel', 'section-feed')">Visualizar como Aluno</button>
+    <div id="section-admin" class="container hidden">
+        <h2>Avaliação de Professores</h2>
+        <div id="admin-auth">
+            <input type="password" id="admin-senha" placeholder="Senha Mestra">
+            <button onclick="validarAdmin()">Acessar Painel</button>
+            <button style="background: #ccc;" onclick="location.reload()">Voltar</button>
+        </div>
+        <div id="admin-painel" class="hidden">
+            <div id="admin-lista-posts">
+                </div>
+        </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, push, set, onValue, update } 
-        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        import { getDatabase, ref, push, set, onValue, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        // CONFIGURAÇÃO DO SEU PROJETO (COLE SEUS DADOS AQUI)
+        // CONFIGURAÇÃO (COLE OS SEUS DADOS AQUI!)
         const firebaseConfig = {
             apiKey: "COLE_AQUI",
             authDomain: "poesiaxxx12.firebaseapp.com",
@@ -176,133 +81,99 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
-        let currentUser = {};
+        let userLocal = {};
 
-        // FORMATAÇÃO AUTOMÁTICA DE CPF
-        document.getElementById('login-cpf').addEventListener('input', e => {
-            let v = e.target.value.replace(/\D/g, "");
-            v = v.replace(/(\d{3})(\d)/, "$1.$2");
-            v = v.replace(/(\d{3})(\d)/, "$1.$2");
-            v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-            e.target.value = v;
-        });
-
-        // TROCA DE TELA
-        window.trocarTela = (idSair, idEntrar) => {
-            document.getElementById(idSair).classList.add('hidden');
-            document.getElementById(idEntrar).classList.remove('hidden');
-        }
-
-        // LOGIN COM VALIDAÇÃO
-        window.validaEntrada = () => {
+        // LOGIN
+        window.entrar = () => {
             const nome = document.getElementById('login-nome').value;
-            const cpf = document.getElementById('login-cpf').value;
-            const aura = document.getElementById('login-aura').value;
+            if(!nome) return alert("Digite seu nome!");
+            userLocal = { nome, turma: document.getElementById('login-turma').value };
+            document.getElementById('perfil-nome').innerText = nome;
+            document.getElementById('section-login').classList.add('hidden');
+            document.getElementById('section-feed').classList.remove('hidden');
+            escutarBanco(); // Começa a ler o banco em tempo real
+        };
 
-            if(nome.length < 3 || cpf.length < 14) {
-                return alert("Por favor, preencha Nome e CPF corretamente!");
-            }
-
-            currentUser = {
-                nome: nome,
-                aura: aura,
-                turma: document.getElementById('login-turma').value,
-                escola: document.getElementById('login-escola').value
-            };
-
-            document.getElementById('display-nome').innerText = nome;
-            trocarTela('section-login', 'section-feed');
-            iniciarEscutaFeed();
-        }
-
-        // ENVIAR POST
-        window.enviarParaNuvem = () => {
+        // PUBLICAR
+        window.publicar = () => {
             const texto = document.getElementById('post-texto').value;
             const tipo = document.getElementById('post-tipo').value;
-            
-            if(!texto.trim()) return alert("Escreva algo antes de postar!");
+            if(!texto) return alert("Escreva algo!");
 
-            const postRef = ref(db, 'posts');
-            const novoPost = push(postRef);
-            
-            set(novoPost, {
-                autor: currentUser.nome,
-                escola: currentUser.escola,
-                turma: currentUser.turma,
-                tipo: tipo,
+            const novoPostRef = push(ref(db, 'postagens'));
+            set(novoPostRef, {
+                autor: userLocal.nome,
+                turma: userLocal.turma,
                 conteudo: texto,
+                categoria: tipo,
                 nota: null,
                 data: Date.now()
-            });
+            }).then(() => {
+                document.getElementById('post-texto').value = "";
+            }).catch((err) => alert("Erro ao publicar: " + err));
+        };
 
-            document.getElementById('post-texto').value = "";
-            alert("Publicado com sucesso!");
-        }
-
-        // ESCUTAR FEED EM TEMPO REAL
-        function iniciarEscutaFeed() {
-            onValue(ref(db, 'posts'), (snapshot) => {
-                const feed = document.getElementById('feed-dinamico');
-                feed.innerHTML = "";
-                
-                let postsArray = [];
-                snapshot.forEach(child => {
-                    postsArray.push({ id: child.key, ...child.val() });
-                });
-
-                // Mostrar os mais recentes primeiro
-                postsArray.reverse().forEach(post => {
-                    feed.innerHTML += `
-                        <div class="post-card">
-                            <span class="nota-badge">${post.nota ? '⭐ ' + post.nota : '⏳ Avaliando'}</span>
-                            <span class="type-tag">${post.tipo}</span>
-                            <p style="margin: 10px 0;">${post.conteudo}</p>
-                            <div style="font-size: 12px; color: #636e72;">
-                                Por <strong>${post.autor}</strong> | ${post.turma}
+        // LER EM TEMPO REAL (PARA TODOS OS USUÁRIOS)
+        function escutarBanco() {
+            const dbRef = ref(db, 'postagens');
+            onValue(dbRef, (snapshot) => {
+                const lista = document.getElementById('feed-lista');
+                lista.innerHTML = "<h3>Feed da Comunidade</h3>";
+                const dados = snapshot.val();
+                if (dados) {
+                    // Transforma em array para inverter e mostrar o mais novo primeiro
+                    Object.keys(dados).reverse().forEach(id => {
+                        const post = dados[id];
+                        lista.innerHTML += `
+                            <div class="post-card">
+                                <span class="nota-badge">${post.nota ? '⭐ ' + post.nota : '⏳'}</span>
+                                <small>${post.categoria} | <strong>${post.autor}</strong></small>
+                                <p>${post.conteudo}</p>
                             </div>
-                        </div>
-                    `;
-                });
+                        `;
+                    });
+                }
             });
         }
 
-        // ADMIN LÓGICA
-        window.autenticarAdmin = () => {
-            const senha = document.getElementById('admin-password').value;
-            if(senha === "admin123") { // Mude aqui sua senha
-                trocarTela('section-admin-auth', 'section-admin-panel');
-                carregarAdminPanel();
-            } else { alert("Senha de Administrador Inválida!"); }
-        }
+        // ADMIN
+        window.mostrarPainelAdmin = () => {
+            document.getElementById('section-login').classList.add('hidden');
+            document.getElementById('section-admin').classList.remove('hidden');
+        };
 
-        function carregarAdminPanel() {
-            onValue(ref(db, 'posts'), (snapshot) => {
-                const div = document.getElementById('admin-feed');
-                div.innerHTML = "";
-                snapshot.forEach(child => {
-                    const p = child.val();
+        window.validarAdmin = () => {
+            const senha = document.getElementById('admin-senha').value;
+            if(senha === "admin123") {
+                document.getElementById('admin-auth').classList.add('hidden');
+                document.getElementById('admin-painel').classList.remove('hidden');
+                escutarAdmin();
+            } else { alert("Senha incorreta!"); }
+        };
+
+        function escutarAdmin() {
+            onValue(ref(db, 'postagens'), (snapshot) => {
+                const lista = document.getElementById('admin-lista-posts');
+                lista.innerHTML = "<h3>Avaliar Trabalhos</h3>";
+                snapshot.forEach((child) => {
+                    const post = child.val();
                     const id = child.key;
-                    div.innerHTML += `
+                    lista.innerHTML += `
                         <div class="post-card">
-                            <p><strong>${p.autor}</strong>: ${p.conteudo}</p>
-                            <div style="display:flex; gap:10px;">
-                                <input type="number" id="nota-${id}" placeholder="0-10" style="width: 80px; margin:0;">
-                                <button onclick="atribuirNota('${id}')" style="margin:0; padding:5px;">Dar Nota</button>
-                            </div>
+                            <p><strong>${post.autor}</strong>: ${post.conteudo}</p>
+                            <input type="number" id="input-${id}" placeholder="Nota 0-10">
+                            <button onclick="salvarNota('${id}')">Confirmar Nota</button>
                         </div>
                     `;
                 });
             });
         }
 
-        window.atribuirNota = (id) => {
-            const nota = document.getElementById(`nota-${id}`).value;
-            if(!nota) return alert("Insira uma nota!");
-            
-            update(ref(db, 'posts/' + id), { nota: nota });
-            alert("Nota salva no sistema!");
-        }
-
+        window.salvarNota = (id) => {
+            const n = document.getElementById(`input-${id}`).value;
+            update(ref(db, 'postagens/' + id), { nota: n });
+            alert("Nota salva!");
+        };
     </script>
 </body>
-</html>>
+</html>
